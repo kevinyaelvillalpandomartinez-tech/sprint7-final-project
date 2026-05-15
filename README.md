@@ -1,125 +1,226 @@
 # sprint7-final-project
-# Análisis de Clientes y Uso de Servicios de Telecomunicaciones
+# 📊 Análisis de Clientes y Consumo de Servicios – ConnectaTel
 
-## Objetivo del Proyecto
+## 📌 Objetivo del Proyecto
 
-El objetivo de este proyecto es analizar el comportamiento de uso de clientes de una empresa de telecomunicaciones durante 2024, identificando patrones de consumo relacionados con llamadas, mensajes y tipo de plan contratado.
+El objetivo de este proyecto es analizar el comportamiento de los clientes de **ConnectaTel**, una empresa de telecomunicaciones en Latinoamérica, utilizando información registrada hasta el año 2024.
 
-A través del análisis exploratorio y segmentación de usuarios, se busca comprender:
-- diferencias de comportamiento entre planes,
-- niveles de uso de los clientes,
-- posibles patrones en consumo de servicios,
-- distribución demográfica de los usuarios.
+A través de técnicas de limpieza, exploración y visualización de datos, el proyecto busca:
 
----
-
-## Datasets Utilizados
-
-### users.csv
-Contiene información demográfica y de suscripción de los usuarios:
-- `user_id`
-- `age`
-- `city`
-- `plan`
-- `reg_date`
-
-### usage.csv
-Contiene el historial de uso de servicios:
-- `user_id`
-- `type`
-- `duration`
-- `date`
+* identificar patrones de consumo de llamadas y mensajes,
+* analizar diferencias entre tipos de planes,
+* detectar problemas de calidad de datos,
+* segmentar usuarios según su nivel de uso,
+* generar insights sobre el comportamiento histórico de los clientes.
 
 ---
 
-## Etapas del Análisis
+# 🗂️ Datasets Utilizados
 
-### 1. Limpieza y Preparación de Datos
-- Conversión de fechas a formato datetime.
-- Reemplazo de valores sentinel.
-- Tratamiento de valores nulos.
-- Validación de fechas futuras.
+El proyecto utiliza tres datasets principales:
 
-### 2. Exploración de Datos
-- Revisión de columnas categóricas.
-- Estadísticas descriptivas.
-- Distribución de planes.
-- Identificación de patrones de uso.
+## 1. `users.csv`
 
-### 3. Ingeniería de Variables
-- Creación de métricas agregadas por usuario:
-  - cantidad de mensajes,
-  - cantidad de llamadas,
-  - minutos totales de llamadas.
-- Segmentación de usuarios según nivel de uso.
+Contiene información demográfica y de suscripción de los usuarios.
 
-### 4. Visualización
-- Histogramas por tipo de plan.
-- Distribuciones de edad.
-- Comparación de consumo entre segmentos.
+### Variables principales:
 
-### 5. Segmentación de Clientes
-Clasificación de usuarios en:
-- Bajo uso
-- Uso medio
-- Alto uso
+* `user_id`
+* `age`
+* `city`
+* `plan`
+* `reg_date`
 
 ---
 
-## Tecnologías Utilizadas
+## 2. `usage.csv`
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Google Colab
+Contiene el historial de uso de servicios por usuario.
+
+### Variables principales:
+
+* `user_id`
+* `type`
+* `duration`
+* `length`
+* `date`
 
 ---
 
-## Cómo Ejecutar el Proyecto
+## 3. `plans.csv`
 
-### Opción 1: Google Colab
+Contiene información sobre los planes disponibles.
+
+### Variables principales:
+
+* precio mensual
+* minutos incluidos
+* GB incluidos
+* costos por excedente
+
+---
+
+# 🔎 Etapas del Análisis
+
+## 1. Carga y Exploración de Datos
+
+* Importación de librerías.
+* Carga de datasets.
+* Revisión inicial con `.head()`, `.info()` y `.shape()`.
+* Identificación de tipos de datos y estructura.
+
+---
+
+## 2. Identificación de Problemas de Calidad
+
+* Detección de valores nulos.
+* Identificación de sentinels.
+* Revisión de valores inválidos.
+* Exploración de columnas categóricas y numéricas.
+
+---
+
+## 3. Limpieza de Datos
+
+* Conversión de fechas a formato `datetime`.
+* Reemplazo de sentinels:
+
+  * `-999` en edad.
+  * `?` en ciudad.
+* Corrección de fechas futuras.
+* Tratamiento de valores nulos.
+
+---
+
+## 4. Ingeniería de Variables
+
+Se construyó una tabla agregada por usuario para resumir el comportamiento histórico.
+
+### Métricas generadas:
+
+* cantidad de mensajes,
+* cantidad de llamadas,
+* minutos totales de llamadas.
+
+También se combinaron datasets usando `merge()`.
+
+---
+
+## 5. Análisis Estadístico
+
+* Resumen estadístico de variables numéricas.
+* Distribución porcentual de planes.
+* Identificación de rangos y posibles valores extremos.
+
+---
+
+## 6. Visualización de Datos
+
+Se realizaron histogramas y gráficos comparativos para:
+
+* edad,
+* cantidad de mensajes,
+* cantidad de llamadas,
+* minutos de llamadas.
+
+Los gráficos utilizaron `hue='plan'` para comparar usuarios Básico y Premium.
+
+---
+
+## 7. Segmentación de Clientes
+
+Los usuarios fueron clasificados según su nivel de uso:
+
+| Segmento  | Condición                     |
+| --------- | ----------------------------- |
+| Bajo uso  | llamadas < 5 y mensajes < 5   |
+| Uso medio | llamadas < 10 y mensajes < 10 |
+| Alto uso  | resto de usuarios             |
+
+---
+
+# 🛠️ Tecnologías Utilizadas
+
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Seaborn
+* Jupyter Notebook
+* Google Colab
+
+---
+
+# ▶️ Cómo Ejecutar el Proyecto
+
+## Opción 1: Google Colab
+
 1. Abrir el notebook `.ipynb` en Google Colab.
-2. Subir los archivos `users.csv` y `usage.csv`.
+2. Subir los archivos CSV necesarios.
 3. Ejecutar las celdas en orden.
 
-### Opción 2: Jupyter Notebook
-1. Clonar el repositorio:
+---
+
+## Opción 2: Jupyter Notebook Local
+
+### 1. Clonar el repositorio
+
 ```bash
-git clone <url-del-repositorio>
+git clone <URL_DEL_REPOSITORIO>
 ```
 
-2. Instalar dependencias:
+### 2. Instalar dependencias
+
 ```bash
 pip install pandas numpy matplotlib seaborn
 ```
 
-3. Ejecutar Jupyter Notebook:
+### 3. Ejecutar Jupyter Notebook
+
 ```bash
 jupyter notebook
 ```
 
-4. Abrir el archivo `.ipynb`.
+### 4. Abrir el notebook del proyecto
+
+Abrir el archivo:
+
+```bash
+S7 Version-Estudiante-Project-ConnectaTel.ipynb
+```
 
 ---
 
-## Guía de Reproducción
+# 🔁 Guía de Reproducción
 
-1. Descargar los datasets.
-2. Ejecutar la sección de limpieza de datos.
-3. Generar la tabla agregada de uso por usuario.
-4. Combinar tablas.
-5. Ejecutar análisis estadístico.
-6. Generar visualizaciones.
-7. Analizar segmentación de clientes.
+Para reproducir el análisis:
+
+1. Descargar o clonar el repositorio.
+2. Colocar los datasets en la misma carpeta del notebook.
+3. Ejecutar el notebook desde el inicio.
+4. Revisar las etapas de:
+
+   * limpieza,
+   * transformación,
+   * agregación,
+   * visualización,
+   * segmentación.
+5. Interpretar los insights generados.
 
 ---
 
-## Resultados Esperados
+# 📈 Resultados Esperados
 
-El análisis permite:
-- identificar diferencias entre planes,
-- detectar usuarios de alto consumo,
-- comprender patrones de comportamiento,
-- apoyar futuras decisiones de negocio y segmentación comercial.
+El proyecto permite:
+
+* comprender el comportamiento de consumo de los usuarios,
+* identificar diferencias entre planes,
+* detectar usuarios de alto consumo,
+* apoyar procesos de segmentación y toma de decisiones comerciales.
+
+---
+
+# 👨‍💻 Autor
+
+Proyecto desarrollado como parte de un proceso de formación en análisis de datos utilizando Python y herramientas de visualización.
+
